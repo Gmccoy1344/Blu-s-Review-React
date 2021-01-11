@@ -1,5 +1,6 @@
 import React from 'react';
-import {Card, CardImg, CardTitle, CardText, CardBody } from 'reactstrap';
+import {Card, CardImg, CardTitle, CardText, CardBody, Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 function RenderDirectoryItem({item}){
     return(
@@ -9,6 +10,9 @@ function RenderDirectoryItem({item}){
                 <CardTitle className="col-md">{item.name}</CardTitle>
                 <CardText>
                     <p>Ratings</p>
+                    <Link to={`/home/${item.id}`}>
+                        <Button color="primary" outline>Review</Button>{' '}
+                    </Link>
                 </CardText>
             </CardBody>
         </Card>
