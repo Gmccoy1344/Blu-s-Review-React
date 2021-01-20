@@ -15,11 +15,6 @@ h2 {
   color: #3046C5;
 }
 
-.card-img-overlay .card-title {
-  color: white;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
 .row-content {
   padding: 50px 0;
   border-bottom: 1px ridge;
@@ -80,4 +75,18 @@ a:link, a:visited{
 
 .socials>a:link, .socials>a:visited{
   color: white;
+}
+
+.card-footer{
+  background-color: #0779e4;
+}
+
+.carousel-item{
+  height: 600px;
+}
+
+.avatar{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }

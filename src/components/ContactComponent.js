@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Breadcrumb, BreadcrumbItem, Form, FormGroup, Label, Input, Col, Button } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Form, FormGroup, Label, Input, Col, Button, FormFeedback } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 class Contact extends Component {
@@ -10,11 +10,53 @@ class Contact extends Component {
             firstName: '',
             lastName: '',
             email: '',
-            feedback: ''
+            feedback: '',
+            touched: {
+                firstName: false,
+                lastName: false,
+                email: false
+            }
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    validate(firstName, lastName, email) {
+
+        const errors = {
+            firstName: '',
+            lastName: '',
+            email: ''
+        };
+
+        if(this.state.touched.firstName) {
+            if(firstName.length < 2) {
+                errors.firstName = 'First name must be at least 2 characters.';
+            }else if(firstName.length > 15) {
+                errors.firstName = 'First name must be 15 characters or less.';
+            }
+        }
+
+        if(this.state.touched.lastName) {
+            if(lastName.length < 2) {
+                errors.lastName = 'Last name must be at least 2 characters.';
+            }else if(lastName.length > 15) {
+                errors.lastName = 'Last name must be 15 characters or less.';
+            }
+        }
+
+        if(this.state.touched.email && !email.includes('@')){
+            errors.email = 'Email should contain a @';
+        }
+
+        return errors;
+    }
+
+    handleBlur = (field) => () => {
+        this.setState({
+            touched: {...this.state.touched, [field]: true}
+        });
     }
 
     handleSubmit(event) {
@@ -34,6 +76,8 @@ class Contact extends Component {
     }
 
     render()  {
+
+        const errors = this.validate(this.state.firstName, this.state.lastName, this.state.email);
         return(
             <div className="container">
                 <div className="row">
@@ -77,7 +121,10 @@ class Contact extends Component {
                                     <Input type="text" id="firstName" name="firstName"
                                         placeholder="First Name"
                                         value={this.state.firstName}
+                                        invalid={errors.firstName}
+                                        onBlur={this.handleBlur("firstName")}
                                         onChange={this.handleInputChange} />
+                                    <FormFeedback>{errors.firstName}</FormFeedback>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -86,7 +133,10 @@ class Contact extends Component {
                                     <Input type="text" id="lastName" name="lastName"
                                         placeholder="Last Name"
                                         value={this.state.lastName}
+                                        invalid={errors.lastName}
+                                        onBlur={this.handleBlur("lastName")}
                                         onChange={this.handleInputChange} />
+                                    <FormFeedback>{errors.lastName}</FormFeedback>
                                 </Col>                        
                             </FormGroup>
                             <FormGroup row>
@@ -95,7 +145,10 @@ class Contact extends Component {
                                     <Input type="email" id="email" name="email"
                                         placeholder="Email"
                                         value={this.state.email}
+                                        invalid={errors.email}
+                                        onBlur={this.handleBlur("email")}
                                         onChange={this.handleInputChange} />
+                                    <FormFeedback>{errors.email}</FormFeedback>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -109,7 +162,7 @@ class Contact extends Component {
                             </FormGroup>
                             <FormGroup row>
                                 <Col md={{size: 10, offset: 2}}>
-                                    <Button type="submit" color="primary">
+                                    <Button type="submit" color="info">
                                         Send Feedback
                                     </Button>
                                 </Col>

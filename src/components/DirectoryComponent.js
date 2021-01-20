@@ -1,19 +1,18 @@
 import React from 'react';
-import {Card, CardImg, CardTitle, CardText, CardBody, Button } from 'reactstrap';
+import {Card, CardImg, CardTitle, CardBody, Button, CardFooter } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 function RenderDirectoryItem({item}){
     return(
         <Card>
-            <CardImg width="100%" src={item.image} alt={item.name}/>
+            <CardImg className="d-block w-100" width="100%" src={item.image} alt={item.name}/>
             <CardBody>
                 <CardTitle className="col-md">{item.name}</CardTitle>
-                <CardText>
-                    <p>Ratings</p>
+                <CardFooter>
                     <Link to={`/home/${item.id}`}>
-                        <Button color="primary" outline>Review</Button>{' '}
+                        <Button color="info" >Review</Button>{' '}
                     </Link>
-                </CardText>
+                </CardFooter>
             </CardBody>
         </Card>
     )
